@@ -135,6 +135,9 @@ resource "aws_instance" "server" {
     },
     {
       "NomadType" = "server"
+    },
+    {
+      "ttl" = "-1"
     }
   )
 
@@ -180,6 +183,9 @@ resource "aws_instance" "client" {
     },
     {
       "NomadType" = "client"
+    },
+    {
+      "ttl" = "-1"
     }
   )
 
