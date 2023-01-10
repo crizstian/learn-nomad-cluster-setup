@@ -8,13 +8,13 @@ provider "google" {
   zone    = var.zone
 }
 
-resource "google_compute_network" "hashistack" {
- name = "hashistack-${var.name}"
-}
+// resource "google_compute_network" "hashistack" {
+//  name = "hashistack-${var.name}"
+// }
 
 resource "google_compute_firewall" "consul_nomad_ui_ingress" {
   name          = "${var.name}-ui-ingress"
-  network       = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+  network       = "harness-se-latam" #google_compute_network.hashistack.name
   source_ranges = [var.allowlist_ip]
 
   # Nomad
@@ -32,7 +32,7 @@ resource "google_compute_firewall" "consul_nomad_ui_ingress" {
 
 resource "google_compute_firewall" "ssh_ingress" {
   name          = "${var.name}-ssh-ingress"
-  network       = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+  network       = "harness-se-latam" #google_compute_network.hashistack.name
   source_ranges = [var.allowlist_ip]
 
   # SSH
@@ -44,7 +44,7 @@ resource "google_compute_firewall" "ssh_ingress" {
 
 resource "google_compute_firewall" "allow_all_internal" {
   name        = "${var.name}-allow-all-internal"
-  network     = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+  network     = "harness-se-latam" #google_compute_network.hashistack.name
   source_tags = ["auto-join"]
 
   allow {
@@ -64,7 +64,7 @@ resource "google_compute_firewall" "allow_all_internal" {
 
 resource "google_compute_firewall" "clients_ingress" {
   name          = "${var.name}-clients-ingress"
-  network       = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+  network       = "harness-se-latam" #google_compute_network.hashistack.name
   source_ranges = [var.allowlist_ip]
   target_tags   = ["nomad-clients"]
 
@@ -95,7 +95,7 @@ resource "google_compute_instance" "server" {
   }
 
   network_interface {
-    network = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+    network = "harness-se-latam" #google_compute_network.hashistack.name
     access_config {
       // Leave empty to get an ephemeral public IP
     }
@@ -137,7 +137,7 @@ resource "google_compute_instance" "client" {
   }
 
   network_interface {
-    network = google_compute_network.hashistack.name #"harness-se-latam" #google_compute_network.hashistack.name
+    network = "harness-se-latam" #google_compute_network.hashistack.name
     access_config {
       // Leave empty to get an ephemeral public IP
     }
